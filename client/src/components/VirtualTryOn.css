@@ -1,0 +1,42 @@
+.virtual-tryon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #ffff;
+    padding: 1px;
+}
+
+.video-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+    padding: 5px;
+    margin: 10px;
+}
+
+.tryon-video {
+    width: 900px;
+    height: 800px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.go-back-button {
+    background-color: "green";
+    color: "black";
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 19px;
+    margin-top: 0px;
+    transition:'background 0.3s ease';
+}
+
+
