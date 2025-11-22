@@ -46,30 +46,6 @@ export const registerUser = asyncHandler(async (req, res) => {
     }
 });
 
-// ✅ Exported loginUser properly
-// export const loginUser = asyncHandler(async (req, res) => {
-//     const { email, password } = req.body;
-//     const user = await User.findOne({ email });
-  
-//     if (!user || !(await bcrypt.compare(password, user.password))) {
-//         return res.status(401).json({ message: "Invalid credentials" });
-//     }
-
-//     // ✅ Generate JWT Token with secret key from .env
-//     const token = jwt.sign(
-//         { id: user._id, email: user.email },
-//         process.env.JWT_SECRET,  // Ensure JWT_SECRET is in .env
-//         { expiresIn: "1h" }
-//     );
-
-//     // ✅ Send token in the response
-//     res.json({ 
-//         message: "Login successful", 
-//         token, 
-//         user: { id: user._id, email: user.email, firstName: user.Firstname } 
-//     });
-// });
-
 export const loginUser = async (req, res) => {
     const { email, password } = req.body;
   
