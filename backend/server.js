@@ -12,7 +12,13 @@ import clothesRoutes from "./routes/clothes.js";
 // import wishlistRoutes  from "./routes/wishlistRoutes.js";
 
 dotenv.config();
-connectDB();
+// connectDB();
+import mongoose from "mongoose";
+mongoose.connect(
+  "mongodb://localhost:27017/vcloset"
+)
+.then(() => console.log("Database Connected"))
+.catch(err => console.log("Database Connection Failed:", err));
 
 const app = express();
 

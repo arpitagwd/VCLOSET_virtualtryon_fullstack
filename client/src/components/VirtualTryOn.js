@@ -17,33 +17,70 @@ const VirtualTryOn = () => {
     const cameraRef = useRef(null);
 
 
+    // useEffect(() => {
+    //     if (!product) return;
+
+    //     socketRef.current = new WebSocket("ws://localhost:8000/ws");
+
+    //     socketRef.current.onopen = () => {
+    //         console.log("WebSocket Connected");
+    //         socketRef.current.send(JSON.stringify({ image_path: product.image }));
+    //     };
+
+    //     socketRef.current.onmessage = (event) => {
+    //         const blob = new Blob([event.data], { type: "image/jpeg" });
+    //         setImageSrc(URL.createObjectURL(blob));
+    //     };
+
+    //     socketRef.current.onerror = (error) => {
+    //         console.error("WebSocket error:", error);
+    //     };
+
+    //     socketRef.current.onclose = () => {
+    //         console.log("WebSocket Disconnected");
+    //     };
+
+    //     return () => {
+    //         stopWebSocketAndCamera();
+    //     };
+    // }, [product]);
+
+
     useEffect(() => {
-        if (!product) return;
+    if (!product) return;
 
-        socketRef.current = new WebSocket("ws://localhost:8000/ws");
+    socketRef.current = new WebSocket("ws://localhost:8000/ws");
 
-        socketRef.current.onopen = () => {
-            console.log("WebSocket Connected");
-            socketRef.current.send(JSON.stringify({ image_path: product.image }));
-        };
+    socketRef.current.onopen = () => {
+        console.log("WebSocket Connected");
 
-        socketRef.current.onmessage = (event) => {
-            const blob = new Blob([event.data], { type: "image/jpeg" });
-            setImageSrc(URL.createObjectURL(blob));
-        };
+        // FIX HERE
+        const relativePath = product.image.replace("/cloth-models/", "");
 
-        socketRef.current.onerror = (error) => {
-            console.error("WebSocket error:", error);
-        };
+        socketRef.current.send(
+            JSON.stringify({
+                image_path: relativePath
+            })
+        );
+    };
 
-        socketRef.current.onclose = () => {
-            console.log("WebSocket Disconnected");
-        };
+    socketRef.current.onmessage = (event) => {
+        const blob = new Blob([event.data], { type: "image/jpeg" });
+        setImageSrc(URL.createObjectURL(blob));
+    };
 
-        return () => {
-            stopWebSocketAndCamera();
-        };
-    }, [product]);
+    socketRef.current.onerror = (error) => {
+        console.error("WebSocket error:", error);
+    };
+
+    socketRef.current.onclose = () => {
+        console.log("WebSocket Disconnected");
+    };
+
+    return () => {
+        stopWebSocketAndCamera();
+    };
+}, [product]);
 
     const stopWebSocketAndCamera = () => {
         if (socketRef.current) {
